@@ -46,38 +46,38 @@ export const login = async (
   }
 };
 
-export const refreshToken = async (refreshToken: string) => {
-  try {
-    const res = await axiosClient.post<AuthRequest, RefreshTokenResponse>(
-      `/auth/refresh-token`,
-      {
-        refreshToken,
-      }
-    );
+// export const refreshToken = async (refreshToken: string) => {
+//   try {
+//     const res = await axiosClient.post<AuthRequest, RefreshTokenResponse>(
+//       `/auth/refresh-token`,
+//       {
+//         refreshToken,
+//       }
+//     );
 
-    return {
-      refreshToken: res.refreshToken,
-    };
-  } catch (error) {
-    const err = error as AxiosError<any>;
-    const errData = err.response?.data;
-    throw errData;
-  }
-};
+//     return {
+//       refreshToken: res.refreshToken,
+//     };
+//   } catch (error) {
+//     const err = error as AxiosError<any>;
+//     const errData = err.response?.data;
+//     throw errData;
+//   }
+// };
 
-export const register = async (authData: AuthRequest) => {
-  try {
-    const { success } = await axiosClient.post<AuthRequest, RegisterResponse>(
-      `/auth/sign-up`,
-      authData
-    );
+// export const register = async (authData: AuthRequest) => {
+//   try {
+//     const { success } = await axiosClient.post<AuthRequest, RegisterResponse>(
+//       `/auth/sign-up`,
+//       authData
+//     );
 
-    return {
-      success,
-    };
-  } catch (error) {
-    const err = error as AxiosError<any>;
-    const errData = err.response?.data;
-    throw errData;
-  }
-};
+//     return {
+//       success,
+//     };
+//   } catch (error) {
+//     const err = error as AxiosError<any>;
+//     const errData = err.response?.data;
+//     throw errData;
+//   }
+// };
