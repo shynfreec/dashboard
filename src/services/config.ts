@@ -1,5 +1,5 @@
 import CookieHandler, { TOKEN } from "@/helpers/cookie";
-import LocalStorageHandler, { REFRESH_TOKEN } from "@/helpers/localStorage";
+import LocalStorageHandler from "@/helpers/localStorage";
 import axios, { AxiosInstance } from "axios";
 import { refreshToken } from "./auth";
 
@@ -22,7 +22,8 @@ axiosClient.interceptors.request.use((config) => {
 axiosClient.interceptors.response.use(
   (response) => response?.data,
   (error) => {
-    const refreshTokenStorage = LocalStorageHandler.get(REFRESH_TOKEN);
+    // temp
+    const refreshTokenStorage = LocalStorageHandler.getItem('user');
     const { response } = error;
 
     // Expired token

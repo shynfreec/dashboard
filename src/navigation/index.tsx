@@ -1,5 +1,5 @@
 import { Role } from "@/lib/enum";
-import { Home, LogOut, LucideIcon, Settings } from "lucide-react";
+import { Home, LogOut, LucideIcon, Settings, User2 } from "lucide-react";
 
 export interface NavProps {
   isCollapsed: boolean;
@@ -26,6 +26,13 @@ export const dashboardNavigation: NavProps["links"] = [
     label: "",
     icon: Settings,
     url: "/dashboard/setting",
+    roles: [],
+  },
+  {
+    title: "User",
+    label: "",
+    icon: User2,
+    url: "/dashboard/user",
     roles: [],
   },
 ];
