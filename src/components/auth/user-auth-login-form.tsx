@@ -61,7 +61,7 @@ export function UserAuthLoginForm({
     onSuccess(data, variables, context) {
       CookieHandler.set(TOKEN, data?.jwt.accessToken);
       LocalStorageHandler.setItem('user', data.user);
-      replace('/');
+      replace('/dashboard/user');
     },
     onError: (_error, variables, _context) => {
       form.reset({ ...variables });

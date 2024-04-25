@@ -1,5 +1,5 @@
 import { Role } from "@/lib/enum";
-import { Home, LogOut, LucideIcon, Settings, User2 } from "lucide-react";
+import { ArrowRightLeftIcon, Home, Layers3Icon, LogOut, LucideIcon, Settings, User2, Workflow, WorkflowIcon } from "lucide-react";
 
 export interface NavProps {
   isCollapsed: boolean;
@@ -15,24 +15,38 @@ export interface NavProps {
 
 export const dashboardNavigation: NavProps["links"] = [
   {
-    title: "Dashboard",
-    label: "",
-    icon: Home,
-    url: "/dashboard",
-    roles: [],
-  },
-  {
-    title: "Setting",
-    label: "",
-    icon: Settings,
-    url: "/dashboard/setting",
-    roles: [],
-  },
-  {
     title: "User",
     label: "",
     icon: User2,
     url: "/dashboard/user",
+    roles: [],
+  },
+  {
+    title: "Transaction",
+    label: "",
+    icon: ArrowRightLeftIcon,
+    url: "/dashboard/transaction",
+    roles: [],
+  },
+  {
+    title: "Affilliate",
+    label: "",
+    icon: WorkflowIcon,
+    url: "/dashboard/affilliate",
+    roles: [],
+  },
+  {
+    title: "Staking",
+    label: "",
+    icon: Layers3Icon,
+    url: "/dashboard/staking",
+    roles: [],
+  },
+  {
+    title: "Config",
+    label: "",
+    icon: Settings,
+    url: "/dashboard/config",
     roles: [],
   },
 ];
