@@ -8,20 +8,16 @@ export async function middleware(request: NextRequest, response: NextResponse) {
   const token = request.cookies.get(TOKEN);
 
   if (pathname !== '/sign-in') {
-    if (!token) return NextResponse.redirect(new URL('/sign-in', request.url));
-    
-    const isValidToken = jwtDecode<JwtPayload>(`${token?.value ?? ''}`);
-    if (!isValidToken) return NextResponse.redirect(new URL('/sign-in', request.url));
-  
-    return NextResponse.next();
-  }
-  if (pathname === '/sign-in') {
-    if (!token) return NextResponse.next();
-    const isValidToken = jwtDecode<JwtPayload>(`${token?.value ?? ''}`);
-    if (isValidToken) return NextResponse.redirect(new URL('/dashboard/user', request.url));
-    return NextResponse.next();
+    if (!token || !jwtDecode(token.value)) {
+      return NextResponse.redirect(new URL('/sign-in', request.url));
+    }
+  } else {
+    if (token && jwtDecode(token.value)) {
+      return NextResponse.redirect(new URL('/dashboard/user', request.url));
+    }
   }
 
+  return NextResponse.next();
 }
 
 //Add your protected routes

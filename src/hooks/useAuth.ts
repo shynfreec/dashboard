@@ -1,6 +1,6 @@
-import CookieHandler, { TOKEN } from "@/helpers/cookie";
-import LocalStorageHandler from "@/helpers/localStorage";
-import { useEffect, useState } from "react";
+import CookieHandler, { TOKEN } from '@/helpers/cookie';
+import LocalStorageHandler from '@/helpers/localStorage';
+import { useEffect, useState } from 'react';
 
 type UseAuthResponse = {
   isLoggedIn: boolean;
@@ -21,7 +21,7 @@ const useAuth = (): UseAuthResponse => {
 
     const getUserLocalStorage = () => {
       const user = LocalStorageHandler.getItem('user');
-      !!user && setUser(user as unknown as User);
+      !!user && setUser(user as unknown as TUser);
     };
 
     getUserLocalStorage();
