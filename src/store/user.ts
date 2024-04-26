@@ -1,15 +1,15 @@
-import { create } from "zustand";
+import { create } from 'zustand';
 
 interface UserState {
-  user: User | null;
-  users: User[] | null;
-  setCurrentUser: (user: User) => void;
-  setAllUsers: (users: User[]) => void;
+  user: TUser | null;
+  users: TUser[] | null;
+  setCurrentUser: (user: TUser) => void;
+  setAllUsers: (users: TUser[]) => void;
 }
 
 const useUserStore = create<UserState>((set) => ({
   user: null,
-  users: null,
+  users: [],
   setCurrentUser: (user) => {
     set((state) => ({
       ...state,

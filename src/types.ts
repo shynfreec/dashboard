@@ -1,18 +1,9 @@
-type User = {
-  user: {
-    id: string;
-    email: string;
-    phone: string;
-    firstName: string;
-    lastName: string;
-    dob: Date;
-    citizenship: string;
-    gender: string;
-    type: string;
-    permissions: string[];
-  };
-  accessToken: string;
-  refreshToken: string;
+type TUser = {
+  id: string;
+  walletAddress: string;
+  joinedAt: string;
+  avatar: string | null;
+  fullname: string | null;
 };
 
 type SubscriptionResponse = {
