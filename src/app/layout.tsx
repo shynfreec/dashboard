@@ -6,7 +6,7 @@ import { Toaster } from "sonner";
 import { DynamicLayout } from "@/components/layouts/dynamic-layout";
 import { cn } from "@/lib/utils";
 
-const inter = Inter({ subsets: ["latin"] });
+const fontInter = Inter({ subsets: ["latin"],  variable: "--font-sans" });
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -20,7 +20,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={cn(inter.className, "h-screen")}>
+      <body className={cn("h-screen bg-background font-sans antialiased", fontInter.variable)}>
         <TanstackProvider>
           <Toaster />
           <DynamicLayout navCollapsedSize={0}>{children}</DynamicLayout>

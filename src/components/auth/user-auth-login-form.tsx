@@ -1,16 +1,16 @@
-"use client";
+'use client';
 
-import { cn } from "@/lib/utils";
-import { Button } from "../ui/button";
-import { Input } from "../ui/input";
+import { cn } from '@/lib/utils';
+import { Button } from '../ui/button';
+import { Input } from '../ui/input';
 
-import { AuthRequest, login } from "@/services/auth";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useMutation } from "@tanstack/react-query";
-import { useRouter } from "next/navigation";
-import { useForm } from "react-hook-form";
-import * as z from "zod";
-import { Icons } from "../common/icon";
+import { AuthRequest, login } from '@/services/auth';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useMutation } from '@tanstack/react-query';
+import { useRouter } from 'next/navigation';
+import { useForm } from 'react-hook-form';
+import * as z from 'zod';
+import { Icons } from '../common/icon';
 import {
   Form,
   FormControl,
@@ -18,25 +18,26 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "../ui/form";
-import CookieHandler, { TOKEN } from "@/helpers/cookie";
+} from '../ui/form';
+import CookieHandler, { TOKEN } from '@/helpers/cookie';
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "../ui/card";
+} from '../ui/card';
+import LocalStorageHandler from '@/helpers/localStorage';
 
 interface UserAuthLoginFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 
 const FormSchema = z.object({
   email: z
     .string()
-    .min(1, { message: "This field has to be filled." })
-    .email("This is not a valid email."),
+    .min(1, { message: 'This field has to be filled.' })
+    .email('This is not a valid email.'),
   password: z.string().min(8, {
-    message: "Your password must be at least 8 characters.",
+    message: 'Your password must be at least 8 characters.',
   }),
 });
 
@@ -49,17 +50,18 @@ export function UserAuthLoginForm({
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
-      email: "",
-      password: "",
+      email: '',
+      password: '',
     },
   });
 
   const loginMutation = useMutation({
     mutationFn: (authData: AuthRequest) => login(authData),
-    mutationKey: ["login"],
+    mutationKey: ['login'],
     onSuccess(data, variables, context) {
-      CookieHandler.set(TOKEN, data?.accessToken);
-      replace("/");
+      CookieHandler.set(TOKEN, data?.jwt.accessToken);
+      LocalStorageHandler.setItem('user', data.user);
+      replace('/dashboard/user');
     },
     onError: (_error, variables, _context) => {
       form.reset({ ...variables });
@@ -74,27 +76,27 @@ export function UserAuthLoginForm({
   };
 
   return (
-    <div className={cn("grid gap-6", className)} {...props}>
+    <div className={cn('grid gap-6', className)} {...props}>
       <Card>
-        <CardHeader className="space-y-1">
+        <CardHeader className='space-y-1'>
           <CardDescription>
-            Enter your email below to create your account
+            Enter your email and password to Sign in
           </CardDescription>
         </CardHeader>
-        <CardContent className="grid gap-4">
+        <CardContent className='grid gap-4'>
           <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-3">
+            <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-3'>
               <FormField
                 control={form.control}
-                name="email"
+                name='email'
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Email</FormLabel>
 
                     <FormControl>
                       <Input
-                        placeholder="name@example.com"
-                        type="email"
+                        placeholder='name@example.com'
+                        type='email'
                         {...field}
                       />
                     </FormControl>
@@ -104,14 +106,14 @@ export function UserAuthLoginForm({
               />
               <FormField
                 control={form.control}
-                name="password"
+                name='password'
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Password</FormLabel>
                     <FormControl>
                       <Input
-                        placeholder="password"
-                        type="password"
+                        placeholder='password'
+                        type='password'
                         {...field}
                       />
                     </FormControl>
@@ -121,13 +123,13 @@ export function UserAuthLoginForm({
               />
               <Button
                 disabled={form.formState.isSubmitSuccessful}
-                type="submit"
-                className="w-full mt-9"
+                type='submit'
+                className='w-full mt-9'
               >
                 {form.formState.isSubmitSuccessful ? (
-                  <Icons.spinner className="mr-2 h-4 w-full animate-spin" />
+                  <Icons.spinner className='mr-2 h-4 w-full animate-spin' />
                 ) : (
-                  "Login"
+                  'Login'
                 )}
               </Button>
             </form>

@@ -1,18 +1,38 @@
-export const REFRESH_TOKEN = "REFRESH_TOKEN";
-export const USER = "USER";
+const hasWindow = typeof Window !== 'undefined';
+const hasLocalStorage = typeof localStorage !== 'undefined';
 
-interface LocalStorageHandler {
-  get: (key: string) => string | null;
-  set: (key: string, value: any) => void;
-  remove: (key: string) => void;
-  clear: () => void;
-}
+const localStorageKeys = {
+  user: 'user'
+};
 
-const LocalStorageHandler: LocalStorageHandler = {
-  get: (key: string) => localStorage.getItem(key),
-  set: (key: string, value: string) => localStorage.setItem(key, value),
-  remove: (key: string) => localStorage.removeItem(key),
-  clear: () => localStorage.clear(),
+type TLocalStorageKeys = keyof typeof localStorageKeys;
+
+const LocalStorageHandler = {
+  setItem: (key: TLocalStorageKeys, value: any) => {
+    if (hasWindow && hasLocalStorage) {
+      localStorage.setItem(key, JSON.stringify(value));
+    }
+  },
+  getItem: (key: TLocalStorageKeys | null) => {
+    if (hasWindow && hasLocalStorage) {
+      if (key !== null && localStorage.getItem(key)) {
+        return JSON.parse(localStorage.getItem(key) ?? '');
+      }
+    }
+    return null;
+  },
+  removeItem: (key: TLocalStorageKeys) => {
+    if (hasWindow && hasLocalStorage && localStorage.getItem(key)) {
+      localStorage.removeItem(key);
+      return true;
+    }
+    return false;
+  },
+  clear: () => {
+    if (hasWindow && hasLocalStorage) {
+      localStorage.clear();
+    }
+  },
 };
 
 export default LocalStorageHandler;
