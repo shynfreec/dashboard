@@ -4,12 +4,12 @@ import { useEffect, useState } from 'react';
 
 type UseAuthResponse = {
   isLoggedIn: boolean;
-  user: User | null;
+  user: TUser | null;
 };
 
 const useAuth = (): UseAuthResponse => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<TUser | null>(null);
 
   useEffect(() => {
     const checkLoginStatus = () => {

@@ -1,6 +1,6 @@
-import CookieHandler, { TOKEN } from "@/helpers/cookie";
-import LocalStorageHandler from "@/helpers/localStorage";
-import axios, { AxiosInstance } from "axios";
+import CookieHandler, { TOKEN } from '@/helpers/cookie';
+import LocalStorageHandler from '@/helpers/localStorage';
+import axios, { AxiosInstance } from 'axios';
 // import { refreshToken } from "./auth";
 
 const baseURL = process.env.NEXT_PUBLIC_API_URL;
@@ -9,20 +9,19 @@ const axiosClient: AxiosInstance = axios.create({
   baseURL,
   timeout: 5000,
   headers: {
-    "Content-Type": "application/json",
-    Accept: "application/json",
+    'Content-Type': 'application/json',
+    Accept: 'application/json',
   },
 });
 
 axiosClient.interceptors.request.use((config) => {
-  config.headers["Authorization"] = `Bearer ${CookieHandler.get(TOKEN)}`;
+  config.headers['Authorization'] = `Bearer ${CookieHandler.get(TOKEN)}`;
   return config;
 });
 
 axiosClient.interceptors.response.use(
   (response) => response?.data,
   (error) => {
-    // temp
     const refreshTokenStorage = LocalStorageHandler.getItem('user');
     const { response } = error;
 

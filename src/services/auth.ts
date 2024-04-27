@@ -1,5 +1,5 @@
-import { AxiosError, AxiosResponse } from "axios";
-import axiosClient from "./config";
+import { AxiosError, AxiosResponse } from 'axios';
+import axiosClient from './config';
 
 export type AuthRequest = {
   email: string;
@@ -9,16 +9,16 @@ export type AuthRequest = {
 type JWTData = {
   accessToken: string;
   expiresIn: string;
-}
+};
 type UserInfo = {
   email: string;
   fullname: string;
   id: string;
-}
+};
 
 export type LoginResponse = {
   jwt: JWTData;
-  user: UserInfo
+  user: UserInfo;
 };
 
 export type RegisterResponse = {
@@ -30,13 +30,13 @@ export type RefreshTokenResponse = {
 };
 
 export const login = async (
-  authData: Pick<AuthRequest, "email" | "password">
+  authData: Pick<AuthRequest, 'email' | 'password'>
 ) => {
   try {
-    const res = await axiosClient.post<AuthRequest, AxiosResponse<LoginResponse>>(
-      `/auth/sign-in`,
-      authData
-    );    
+    const res = await axiosClient.post<
+      AuthRequest,
+      AxiosResponse<LoginResponse>
+    >(`/auth/sign-in`, authData);
 
     return res.data;
   } catch (error) {

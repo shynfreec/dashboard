@@ -1,69 +1,41 @@
 'use client';
-import { Button } from '@/components/ui/button';
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from '@/components/ui/table';
-import useUser from '@/hooks/useUser';
+import { SkeletonTable } from '@/components/common/skeleton-table';
+import { DataTable } from '@/components/user/data-table';
+import { userColumns } from '@/components/user/user-column';
 import { getListUser } from '@/services/user';
 import { useQuery } from '@tanstack/react-query';
-import React from 'react';
 
 const UserPage = () => {
-  const { users } = useUser();
+  const { data, isLoading } = useQuery({
+    queryKey: ['user'],
+    queryFn: () =>
+      getListUser({
+        isAll: true,
+      }),
+  });
 
   return (
-    <div className='p-8 '>
-      <h3 className='text-xl font-bold'>User</h3>
-      <div className='border shadow-sm rounded-lg mt-4'>
-        <Table>
-          <TableHeader>
-            <TableRow>
-              <TableHead className='max-w-[150px]'>Name</TableHead>
-              <TableHead className='hidden md:table-cell'>Email</TableHead>
-              <TableHead className='hidden md:table-cell'>Username</TableHead>
-              <TableHead></TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {users.map((user: TUser) => (
-              <UserRow key={user.id} user={user} />
-            ))}
-          </TableBody>
-        </Table>
+    <div className='p-6 flex-1 flex-col space-y-8 md:flex'>
+      <div className='flex items-center justify-between space-y-2'>
+        <div>
+          <h2 className='text-2xl font-bold tracking-tight'>User</h2>
+          <p className='text-muted-foreground'>
+            Here&apos;s a list view our users
+          </p>
+        </div>
       </div>
+      {isLoading ? (
+        <SkeletonTable />
+      ) : data?.data?.length ? (
+        <DataTable data={data?.data as any} columns={userColumns} />
+      ) : (
+        <div className='bg-blue-100 border rounded-md px-4 py-3' role='alert'>
+          <p className='font-bold'>Ops</p>
+          <p className='text-sm'>We have no user to show.</p>
+        </div>
+      )}
     </div>
   );
 };
 
 export default UserPage;
-
-function UserRow({ user }: { user: TUser }) {
-  const userId = user.id;
-  // const deleteUserWithId = deleteUser.bind(null, userId);
-
-  return (
-    <TableRow>
-      <TableCell className='font-medium'>{user.fullname}</TableCell>
-      <TableCell className='hidden md:table-cell'>
-        {user.walletAddress}
-      </TableCell>
-      <TableCell>{user.joinedAt}</TableCell>
-      <TableCell>
-        <Button
-          className='w-full'
-          size='sm'
-          variant='outline'
-          // formAction={deleteUserWithId}
-          disabled
-        >
-          Delete
-        </Button>
-      </TableCell>
-    </TableRow>
-  );
-}
