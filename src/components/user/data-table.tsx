@@ -26,6 +26,7 @@ import {
 } from '@/components/ui/table';
 import { DataTableToolbar } from './data-table-toolbar';
 import { DataTablePagination } from '@/components/common/table/data-table-pagination';
+import { useRouter } from 'next/navigation';
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -43,6 +44,7 @@ export function DataTable<TData, TValue>({
     []
   );
   const [sorting, setSorting] = React.useState<SortingState>([]);
+  const router = useRouter();
 
   const table = useReactTable({
     data,
@@ -70,6 +72,10 @@ export function DataTable<TData, TValue>({
     getFacetedRowModel: getFacetedRowModel(),
     getFacetedUniqueValues: getFacetedUniqueValues(),
   });
+
+  const navigateToDetail = (id: string) => {
+    router.push(`/dashboard/user/${id}`);
+  };
 
   return (
     <div className='space-y-4'>
@@ -100,6 +106,7 @@ export function DataTable<TData, TValue>({
                 <TableRow
                   key={row.id}
                   data-state={row.getIsSelected() && 'selected'}
+                  onClick={() => navigateToDetail(row.getValue('id'))}
                 >
                   {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id}>

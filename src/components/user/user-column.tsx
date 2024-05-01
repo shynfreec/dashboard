@@ -13,6 +13,13 @@ import { checkInString } from '@/lib/utils';
 
 export const userColumns: ColumnDef<any>[] = [
   {
+    accessorKey: 'id',
+    header: ({ column }) => <DataTableColumnHeader column={column} title='' />,
+    cell: ({ row }) => <div />,
+    enableSorting: false,
+    enableHiding: true,
+  },
+  {
     accessorKey: 'avatar',
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title='Avatar' />
@@ -111,8 +118,8 @@ export const userColumns: ColumnDef<any>[] = [
       return value.includes(row.getValue(id));
     },
   },
-  {
-    id: 'actions',
-    cell: ({ row }) => <DataTableRowActions row={row} />,
-  },
+  // {
+  //   id: 'actions',
+  //   cell: ({ row }) => <DataTableRowActions row={row} />,
+  // },
 ];

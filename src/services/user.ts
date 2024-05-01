@@ -20,20 +20,36 @@ type GetUserResponse = {
   options?: PageOption;
 };
 
-// export const getUserDetails = async (id: string) => {
-//   try {
-//     const res = await axiosClient.get<
-//       UserRequest,
-//       AxiosResponse<GetUserProfileResponse>
-//     >(`/admin/user`);
+type GetUserDetailResponse = {
+  data: {
+    banner: null | string;
+    bio: null | string;
+    joinedAt: string;
+    locale: string;
+    numberOfLogins: number;
+    referralCode: string;
+    // avatar: null | string;
+    // email: null | string;
+    // fullname: null | string;
+    // id: string;
+    // walletAddress: string;
+  } & TUser;
+  errors: any;
+};
 
-//     return res.data;
-//   } catch (error) {
-//     const err = error as AxiosError<any>;
-//     const errData = err.response?.data;
-//     throw errData;
-//   }
-// };
+export const getUserDetails = async (id: string) => {
+  try {
+    const res = await axiosClient.get<UserRequest, AxiosResponse<any>>(
+      `/admin/user/${id}`
+    );
+
+    return res.data;
+  } catch (error) {
+    const err = error as AxiosError<GetUserDetailResponse>;
+    const errData = err.response?.data;
+    throw errData;
+  }
+};
 
 export const getListUser = async (data?: UserRequest) => {
   try {
