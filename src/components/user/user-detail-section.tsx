@@ -54,10 +54,12 @@ const UserDetailSection = (props: IUserDetail) => {
           <span className='font-bold'>Fullname</span>
           <span>{fullname}</span>
         </div>
-        <div className='flex gap-2'>
-          <span className='font-bold'>Joined At:</span>
-          <span>{format(joinedAt, 'MM/dd/yyyy')}</span>
-        </div>
+        {joinedAt && (
+          <div className='flex gap-2'>
+            <span className='font-bold'>Joined At:</span>
+            <span>{format(joinedAt, 'MM/dd/yyyy')}</span>
+          </div>
+        )}
         <div className='flex gap-2'>
           <span className='font-bold'>Wallet address:</span>
           <span>{walletAddress}</span>

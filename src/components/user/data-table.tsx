@@ -77,6 +77,8 @@ export function DataTable<TData, TValue>({
     router.push(`/dashboard/user/${id}`);
   };
 
+  console.log(data);
+
   return (
     <div className='space-y-4'>
       <DataTableToolbar table={table} />
