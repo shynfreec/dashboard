@@ -4,7 +4,7 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: 'https',
-        hostname: 'api.7nft.store',
+        hostname: '**',
         port: '',
       },
     ],
